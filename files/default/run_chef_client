@@ -1,0 +1,12 @@
+#!/bin/bash
+
+chef-client \
+    -l info \
+    -L /var/log/chef/client.log \
+    >/dev/null 2>&1
+
+if [ "$?" == "0" ]; then
+    echo 'ok'   >/var/log/chef/last_run_status
+else
+    echo 'fail' >/var/log/chef/last_run_status
+fi
