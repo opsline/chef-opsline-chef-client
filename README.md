@@ -1,4 +1,4 @@
-opsline-hostname Cookbook
+opsline-chef-client Cookbook
 =========================
 This cookbook provides helper recipes for chef client
 
