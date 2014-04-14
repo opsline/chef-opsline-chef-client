@@ -18,7 +18,7 @@ minutes = ''
 end
 minutes.chop!
 
-cookbook_file '/opt/chef/bin' do
+cookbook_file '/opt/chef/bin/run_chef_client' do
   action :create
   source 'run_chef_client'
   owner 'root'
@@ -35,5 +35,5 @@ cron 'chef-client-cron' do
   action node['opsline-chef-client']['cron'] ? :create : :delete
   minute minutes
   user 'root'
-  command '/opt/chef/bin >/dev/null 2>&1'
+  command '/opt/chef/bin/run_chef_client >/dev/null 2>&1'
 end
