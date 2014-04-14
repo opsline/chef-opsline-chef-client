@@ -26,6 +26,11 @@ cookbook_file '/opt/chef/bin' do
   mode '744'
 end
 
+service 'chef-client' do
+  supports :status => true, :restart => true
+  action [:disable, :stop]
+end
+
 cron 'chef-client-cron' do
   action node['opsline-chef-client']['cron'] ? :create : :delete
   minute minutes
