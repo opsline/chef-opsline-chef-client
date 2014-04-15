@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export LC_ALL=en_US.UTF-8
+
 chef-client \
     -l info \
     -L /var/log/chef/client.log \
@@ -8,5 +10,8 @@ chef-client \
 if [ "$?" == "0" ]; then
     echo 'ok'   >/var/log/chef/last_run_status
 else
-    echo 'fail' >/var/log/chef/last_run_status
+    echo 'failed' >/var/log/chef/last_run_status
 fi
+
+chmod 640 /var/log/chef/client.log
+chmod 644 /var/log/chef/last_run_status
