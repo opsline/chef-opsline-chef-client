@@ -23,7 +23,7 @@ cookbook_file '/opt/chef/bin/run_chef_client' do
   source 'run_chef_client'
   owner 'root'
   group 'root'
-  mode '744'
+  mode '0744'
 end
 
 service 'chef-client' do
