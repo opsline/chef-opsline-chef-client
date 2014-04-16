@@ -32,6 +32,11 @@ File will contain 'ok' if the last run suceeded and 'fail' if failed.
 This can be used to configure nagios alerts to notify of chef client failures
 as well as whether chef client runs on schedule (check file age)
 
+The recipe also installs `disable_chef` and `enable_chef` scripts 
+in `/opt/chef/bin`. When disable script creates `/var/log/chef/disabled` file
+which prevents chef client from executing until that file is removed.
+This is a good way to disable chef client runs temporarily.
+
 
 License and Authors
 -------------------

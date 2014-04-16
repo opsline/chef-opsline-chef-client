@@ -26,6 +26,22 @@ cookbook_file '/opt/chef/bin/run_chef_client' do
   mode '0744'
 end
 
+cookbook_file '/opt/chef/bin/disable_chef' do
+  action :create
+  source 'disable_chef'
+  owner 'root'
+  group 'root'
+  mode '0744'
+end
+
+cookbook_file '/opt/chef/bin/enable_chef' do
+  action :create
+  source 'enable_chef'
+  owner 'root'
+  group 'root'
+  mode '0744'
+end
+
 service 'chef-client' do
   supports :status => true, :restart => true
   action [:disable, :stop]
