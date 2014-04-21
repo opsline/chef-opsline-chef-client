@@ -1,0 +1,39 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:           unregister-chef
+# Required-Start:     $remote_fs $network
+# Required-Stop:      $remote_fs $network
+# Default-Start:      2 3 4 5
+# Default-Stop:       0
+# Short-Description:  Unregister chef client from server on shutdown
+### END INIT INFO
+#
+# unregister-chef         Chef un-register script
+# chkconfig: - 2345 99 01
+# description: Unregister chef client from server on shutdown
+
+NAME=unregister-chef
+
+stop() {
+  /opt/chef/bin/unregister_chef
+}
+
+start() {
+  true
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  *)
+    N=/etc/init.d/$NAME
+    echo "Usage: $N {start|stop}" >&2
+    exit 1
+    ;;
+esac
+
+exit 0

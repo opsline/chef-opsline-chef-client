@@ -18,7 +18,7 @@ number of chef client runs per hour
 
 Usage
 -----
-#### opsline-hostname::cron
+#### opsline-chef-client::cron
 Configure chef client cron
 
 Installs `/opt/chef/bin/run_chef_client` script and configures cron job
@@ -36,6 +36,11 @@ The recipe also installs `disable_chef` and `enable_chef` scripts
 in `/opt/chef/bin`. When disable script creates `/var/log/chef/disabled` file
 which prevents chef client from executing until that file is removed.
 This is a good way to disable chef client runs temporarily.
+
+
+#### opsline-chef-client::unregister_on_shutdown
+Installs an init script that will execute when node is shutting down.
+It will delete node and client objects from chef server.
 
 
 License and Authors

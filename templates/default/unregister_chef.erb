@@ -1,0 +1,8 @@
+#!/bin/bash
+
+/usr/bin/knife node   delete <%= @node_name %> -c /etc/chef/client.rb -y
+/usr/bin/knife client delete <%= @node_name %> -c /etc/chef/client.rb -y
+
+rm -f /etc/chef/client.pem
+
+exit 0
