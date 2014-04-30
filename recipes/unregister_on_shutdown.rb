@@ -1,3 +1,12 @@
+#
+# Cookbook Name:: opsline-chef-client
+# Recipe:: unregister_on_shutdown
+#
+# Copyright (C) 2014 Opsline
+# 
+# All rights reserved - Do Not Redistribute
+#
+
 template '/opt/chef/bin/unregister_chef' do
   action :create
   source 'unregister_chef.erb'

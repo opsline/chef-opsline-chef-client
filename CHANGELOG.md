@@ -10,3 +10,7 @@ This file is used to list changes made in each version of opsline-chef-client.
 
 ## 0.3.0
 * Adding init script to unregister node on shutdown.
+
+## 0.4.0
+* Linking enable/disable scripts to /usr/local/bin
+* Adding disable_chef and enable_chef recipes

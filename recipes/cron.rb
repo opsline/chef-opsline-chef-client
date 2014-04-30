@@ -33,6 +33,9 @@ cookbook_file '/opt/chef/bin/disable_chef' do
   group 'root'
   mode '0744'
 end
+link '/usr/local/bin/disable_chef' do
+  to '/opt/chef/bin/disable_chef'
+end
 
 cookbook_file '/opt/chef/bin/enable_chef' do
   action :create
@@ -40,6 +43,9 @@ cookbook_file '/opt/chef/bin/enable_chef' do
   owner 'root'
   group 'root'
   mode '0744'
+end
+link '/usr/local/bin/enable_chef' do
+  to '/opt/chef/bin/enable_chef'
 end
 
 service 'chef-client' do
