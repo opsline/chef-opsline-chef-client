@@ -2,7 +2,7 @@
 
 TIMEOUTCMD=$(which timeout)
 if [ -n "$TIMEOUTCMD" ]; then
-  TIMEOUTCMD="$TIMEOUTCMD -k 45 30"
+  TIMEOUTCMD="$TIMEOUTCMD -k 30 15"
 fi
 
 $TIMEOUTCMD /usr/bin/knife node   delete <%= @node_name %> -c /etc/chef/client.rb -y

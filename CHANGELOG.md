@@ -17,3 +17,8 @@ This file is used to list changes made in each version of opsline-chef-client.
 
 ## 0.5.0
 * Using timeout command in unregister script
+
+## 0.6.0
+* Updating documentation
+* Removing enable_chef recipe (pointless)
+
