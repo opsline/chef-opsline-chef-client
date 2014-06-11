@@ -38,5 +38,5 @@ describe file('/var/log/chef') do
 end
 
 describe cron do
-  it { should have_entry '16,46 * * * * /opt/chef/bin/run_chef_client >/dev/null 2>&1'}
+  it { should have_entry '/opt/chef/bin/run_chef_client >/dev/null 2>&1'}
 end
