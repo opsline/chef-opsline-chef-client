@@ -1,5 +1,5 @@
 ---
-driver:
+driver: 
   name: vagrant
 
 provisioner:
@@ -7,10 +7,18 @@ provisioner:
 
 platforms:
   - name: ubuntu-12.04
-  - name: centos-6.4
 
 suites:
-  - name: default
+  - name: cron
     run_list:
-      - recipe[opsline-chef-client::default]
+      - recipe[opsline-chef-client::cron]
+    attributes:
+  - name: disable
+    run_list:
+      - recipe[opsline-chef-client::cron]
+      - recipe[opsline-chef-client::disable_chef]
+    attributes:
+  - name: unregister
+    run_list:
+      - recipe[opsline-chef-client::unregister_on_shutdown]
     attributes:
