@@ -22,3 +22,6 @@ This file is used to list changes made in each version of opsline-chef-client.
 * Updating documentation
 * Removing enable_chef recipe (pointless)
 
+## 0.7.0
+* License change to Apache License
+* Adding kitchen CI tests
