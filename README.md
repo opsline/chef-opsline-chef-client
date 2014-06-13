@@ -1,12 +1,13 @@
 opsline-chef-client Cookbook
 =========================
-The opsline-chef-client cookbook configures chef client to run from cron.
+This cookbook was created to provide some additional facilities not available from the default chef-client cookbook.  Some additions include logging and status files along with the ability to enable/disable chef-client at will.
+
 
 The cron recipe is different than chef-client::cron in a way that it wraps
 chef-client with a script that creates log and status files. It also 
 provides script to temporarily disable (and enable back) the chef runs.
 
-Additionally, it provides a recipe to un-register chef node from chef server
+Cookbook also provides a recipe to un-register chef nodes from chef server
 on shutdown.
 
 
