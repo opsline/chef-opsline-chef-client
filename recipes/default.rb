@@ -83,7 +83,7 @@ end
 
 # unregister chef at shutdown if enabled
 template '/opt/chef/bin/unregister_chef' do
-  action node['opsline-chef-client']['unregister_at_shutdown'] ? :create : :delete
+  action :create
   source 'unregister_chef.erb'
   owner 'root'
   group 'root'
@@ -93,7 +93,7 @@ template '/opt/chef/bin/unregister_chef' do
   })
 end
 cookbook_file '/etc/init.d/unregister-chef' do
-  action node['opsline-chef-client']['unregister_at_shutdown'] ? :create : :delete
+  action :create
   source 'unregister-chef-init'
   owner 'root'
   group 'root'
