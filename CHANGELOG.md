@@ -25,3 +25,8 @@ This file is used to list changes made in each version of opsline-chef-client.
 ## 0.7.0
 * License change to Apache License
 * Adding kitchen CI tests
+
+## 0.8.0
+* disable/enable scripts will print messages
+* unregister script enabled by attribute
+* moving cron and unregister code to default (keeping recipes for compatibility)
