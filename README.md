@@ -19,18 +19,20 @@ None
 Attributes
 ----------
 * `node['opsline-chef-client']['cron']`
-if true, setup cron job to run chef client
+  if true, setup cron job to run chef client
 * `node['opsline-chef-client']['runs_per_hour']`
-number of chef client runs per hour
+  number of chef client runs per hour
+* `node['opsline-chef-client']['unregister_at_shutdown']`
+  it true, setup service to unregister node from chef server on shutdown
 
 
 Usage
 -----
-#### opsline-chef-client::cron
-Configure chef client cron
+#### opsline-chef-client::default
+Installs `/opt/chef/bin/run_chef_client` script.
 
-Installs `/opt/chef/bin/run_chef_client` script and configures cron job
-that executes it configurable number of times per hour.
+If `node['opsline-chef-client']['cron']` is set to `true`, it
+configures cron job that executes it configurable number of times per hour.
 
 The minute value of cron is calculated based on the hostname, which will
 make it different for every node to splay the execution time.
@@ -53,10 +55,15 @@ Enable script removes the `/var/log/chef/disabled` file so that
 chef client can run again from cron.
 
 
-#### opsline-chef-client::unregister_on_shutdown
-Installs an init script that will execute when node is shutting down.
+If `node['opsline-chef-client']['unregister_at_shutdown']` is set to `true`,
+installs an init script that will execute when node is shutting down.
 It will delete node and client objects from chef server.
 
+#### opsline-chef-client::cron
+For compatibility only - uses default recipe.
+
+#### opsline-chef-client::unregister_on_shutdown
+For compatibility only - uses default recipe.
 
 #### opsline-chef-client::disable_chef
 Disables chef client. When you add this recipe,

@@ -1,0 +1,11 @@
+description	"Unregister chef"
+
+start on runlevel [0]
+
+task
+
+script
+    if [ "$RUNLEVEL" = "0" ]; then
+        exec /opt/chef/bin/unregister_chef
+    fi
+end script
