@@ -6,6 +6,6 @@ task
 
 script
     if [ "$RUNLEVEL" = "0" ]; then
-        exec /opt/chef/bin/unregister_chef
+        exec /opt/chef/bin/unregister_chef >/var/log/unregister_chef.log 2>&1
     fi
 end script

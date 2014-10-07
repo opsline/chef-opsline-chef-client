@@ -92,21 +92,9 @@ template '/opt/chef/bin/unregister_chef' do
     'node_name' => node.name
   })
 end
-# new - upstart service
-cookbook_file '/etc/init/chef-unregister' do
+cookbook_file '/etc/init/chef-unregister.conf' do
   action node['opsline-chef-client']['unregister_at_shutdown'] ? :create : :delete
   source 'chef-unregister-upstart'
-  owner 'root'
-  group 'root'
-  mode 0754
-end
-# old - init service
-service 'unregister-chef' do
-  action :disable
-end
-cookbook_file '/etc/init.d/unregister-chef' do
-  action :delete
-  source 'unregister-chef-init'
   owner 'root'
   group 'root'
   mode 0754

@@ -1,5 +1,8 @@
 # CHANGELOG for opsline-chef-client
 
+## 0.10.0
+* unregister service switched from init to upstart
+
 ## 0.9.0
 * unregister service switched from init to upstart
 
