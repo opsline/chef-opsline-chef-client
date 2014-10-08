@@ -1,12 +1,22 @@
 #!/bin/bash
+set -x
 
 TIMEOUTCMD=$(which timeout)
 if [ -n "$TIMEOUTCMD" ]; then
-  TIMEOUTCMD="$TIMEOUTCMD -k 30 --foreground 15"
+  TIMEOUTCMD="$TIMEOUTCMD --foreground -k 30 15"
 fi
 
-$TIMEOUTCMD /usr/bin/knife node   delete testnode -c /etc/chef/client.rb -y
-$TIMEOUTCMD /usr/bin/knife client delete testnode -c /etc/chef/client.rb -y
+for c in $(seq 5); do
+  $TIMEOUTCMD /usr/bin/knife node delete testnode -c /etc/chef/client.rb -y -V -V
+  [ "$?" == "0" ] && break
+  sleep 1
+done
+
+for c in $(seq 5); do
+  $TIMEOUTCMD /usr/bin/knife client delete testnode -c /etc/chef/client.rb -y -V -V
+  [ "$?" == "0" ] && break
+  sleep 1
+done
 
 rm -f /etc/chef/client.pem
 
