@@ -136,7 +136,7 @@ when 'debian'
       command 'update-rc.d -f unregister-chef remove'
       user 'root'
       timeout 15
-      only_if 'test -f /etc/rc6.d/K20unregister-chef'
+      only_if 'test -f /etc/rc6.d/K20unregister-chef -o -f /etc/rc2.d/K80unregister-chef'
     end
     execute 'update_rc_d_unregister_chef_stop_0' do
       action :run
@@ -158,4 +158,9 @@ when 'rhel', 'fedora'
   service 'unregister-chef' do
     action node['opsline-chef-client']['unregister_at_shutdown'] ? :enable : :disable
   end
+end
+
+# temporary fix
+file '/etc/init/chef-unregister.conf' do
+  action :delete
 end
