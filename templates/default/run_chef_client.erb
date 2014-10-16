@@ -8,14 +8,14 @@ export LC_ALL=en_US.UTF-8
 
 chef-client \
     -l info \
-    -L /var/log/chef/client.log \
+    -L <%= @log_file %> \
     >/dev/null 2>&1
 
 if [ "$?" == "0" ]; then
-    echo 'ok'   >/var/log/chef/last_run_status
+    echo 'ok' >/var/log/chef/last_run_status
 else
     echo 'failed' >/var/log/chef/last_run_status
 fi
 
-chmod 640 /var/log/chef/client.log
+chmod 640 <%= @log_file %>
 chmod 644 /var/log/chef/last_run_status

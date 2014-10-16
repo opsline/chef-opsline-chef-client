@@ -23,12 +23,15 @@ require 'digest'
 
 
 # scripts
-cookbook_file '/opt/chef/bin/run_chef_client' do
+template '/opt/chef/bin/run_chef_client' do
   action :create
-  source 'run_chef_client'
+  source 'run_chef_client.erb'
   owner 'root'
   group 'root'
   mode '0744'
+  variables({
+    :log_file => node['opsline-chef-client']['log_file']
+  })
 end
 cookbook_file '/opt/chef/bin/disable_chef' do
   action :create
@@ -73,11 +76,37 @@ service 'chef-client' do
   supports :status => true, :restart => true
   action node['opsline-chef-client']['cron'] ? [:disable, :stop] : [:enable, :start]
 end
-cron 'chef-client-cron' do
-  action node['opsline-chef-client']['cron'] ? :create : :delete
-  minute minutes
-  user 'root'
-  command '/opt/chef/bin/run_chef_client >/dev/null 2>&1'
+if node['opsline-chef-client']['use_cron_d']
+  cron 'chef-client-cron' do
+    action :delete
+  end
+  cron_d 'chef-client-cron' do
+    action node['opsline-chef-client']['cron'] ? :create : :delete
+    minute minutes
+    user 'root'
+    command '/opt/chef/bin/run_chef_client >/dev/null 2>&1'
+  end
+else
+  cron_d 'chef-client-cron' do
+    action :delete
+  end
+  cron 'chef-client-cron' do
+    action node['opsline-chef-client']['cron'] ? :create : :delete
+    minute minutes
+    user 'root'
+    command '/opt/chef/bin/run_chef_client >/dev/null 2>&1'
+  end
+end
+
+
+# logrotate
+logrotate_app 'chef-client' do
+  cookbook 'logrotate'
+  path '/var/log/chef/*.log'
+  options ['copytruncate', 'missingok', 'compress', 'notifempty', 'delaycompress']
+  frequency 'daily'
+  rotate node['opsline-chef-client']['logrotate']['days']
+  enable node['opsline-chef-client']['logrotate']['enabled'] ? :create : :delete
 end
 
 
@@ -92,10 +121,41 @@ template '/opt/chef/bin/unregister_chef' do
     'node_name' => node.name
   })
 end
-cookbook_file '/etc/init/chef-unregister.conf' do
+cookbook_file '/etc/init.d/unregister-chef' do
   action node['opsline-chef-client']['unregister_at_shutdown'] ? :create : :delete
-  source 'chef-unregister-upstart'
+  source 'unregister-chef-init'
   owner 'root'
   group 'root'
   mode 0754
+end
+case node['platform_family']
+when 'debian'
+  if node['opsline-chef-client']['unregister_at_shutdown']
+    execute 'update_rc_d_unregister_chef_remove_if_6' do
+      action :run
+      command 'update-rc.d -f unregister-chef remove'
+      user 'root'
+      timeout 15
+      only_if 'test -f /etc/rc6.d/K20unregister-chef'
+    end
+    execute 'update_rc_d_unregister_chef_stop_0' do
+      action :run
+      command 'update-rc.d -f unregister-chef stop 20 0 .'
+      user 'root'
+      timeout 15
+      not_if 'test -f /etc/rc0.d/K20unregister-chef'
+    end
+  else
+    execute 'update_rc_d_unregister_chef_remove' do
+      action :run
+      command 'update-rc.d -f unregister-chef remove'
+      user 'root'
+      timeout 15
+      only_if 'test -f /etc/rc0.d/K20unregister-chef'
+    end
+  end
+when 'rhel', 'fedora'
+  service 'unregister-chef' do
+    action node['opsline-chef-client']['unregister_at_shutdown'] ? :enable : :disable
+  end
 end

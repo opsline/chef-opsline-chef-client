@@ -7,13 +7,13 @@ if [ -n "$TIMEOUTCMD" ]; then
 fi
 
 for c in $(seq 5); do
-  $TIMEOUTCMD /usr/bin/knife node delete testnode -c /etc/chef/client.rb -y -V -V
+  $TIMEOUTCMD /usr/bin/knife node delete <%= @node_name %> -c /etc/chef/client.rb -y -V -V
   [ "$?" == "0" ] && break
   sleep 1
 done
 
 for c in $(seq 5); do
-  $TIMEOUTCMD /usr/bin/knife client delete testnode -c /etc/chef/client.rb -y -V -V
+  $TIMEOUTCMD /usr/bin/knife client delete <%= @node_name %> -c /etc/chef/client.rb -y -V -V
   [ "$?" == "0" ] && break
   sleep 1
 done

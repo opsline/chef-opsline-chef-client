@@ -1,12 +1,5 @@
 #! /bin/sh
-### BEGIN INIT INFO
-# Provides:           unregister-chef
-# Required-Start:     $remote_fs $network
-# Required-Stop:      $remote_fs $network
-# Default-Start:      2 3 4 5
-# Default-Stop:       0
-# Short-Description:  Unregister chef client from server on shutdown
-### END INIT INFO
+# update-rc.d is handled by the recipe
 #
 # unregister-chef         Chef un-register script
 # chkconfig: - 2345 99 01

@@ -1,5 +1,12 @@
 # CHANGELOG for opsline-chef-client
 
+## 0.11.0
+* unregister service back to init with proper update-rc.d commands
+  to register only stop in runlevel 0
+* chef log file name as attribute
+* cron or cron_d
+* logrotate
+
 ## 0.10.0
 * unregister service switched from init to upstart
 
