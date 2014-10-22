@@ -65,6 +65,21 @@ end
 
 
 # cron (depends on attribute)
+# disable chef-client service if cron enabled
+if node['opsline-chef-client']['cron']
+  if File.exists?('/etc/init/chef-client.conf')
+    service 'chef-client' do
+      provider Chef::Provider::Service::Upstart
+      action [:disable, :stop]
+    end
+  elsif File.exists?('/etc/init.d/chef-client')
+    service 'chef-client' do
+      supports :status => true, :restart => true
+      action [:disable, :stop]
+    end
+  end
+end
+# schedule cron if enabled
 minute_interval = (60 / node['opsline-chef-client']['runs_per_hour'])
 node_splay = Digest::MD5.new.hexdigest(node.hostname).hex() % minute_interval
 minutes = ''
@@ -72,10 +87,6 @@ minutes = ''
   minutes += ((i * minute_interval) + node_splay).to_s + ','
 end
 minutes.chop!
-service 'chef-client' do
-  supports :status => true, :restart => true
-  action node['opsline-chef-client']['cron'] ? [:disable, :stop] : [:enable, :start]
-end
 if node['opsline-chef-client']['use_cron_d']
   cron 'chef-client-cron' do
     action :delete

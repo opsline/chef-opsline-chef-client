@@ -1,5 +1,8 @@
 # CHANGELOG for opsline-chef-client
 
+## 0.12.0
+* do better job disabling chef service
+
 ## 0.11.0
 * unregister service back to init with proper update-rc.d commands
   to register only stop in runlevel 0
