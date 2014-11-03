@@ -30,7 +30,8 @@ template '/opt/chef/bin/run_chef_client' do
   group 'root'
   mode '0744'
   variables({
-    :log_file => node['opsline-chef-client']['log_file']
+    :log_file => node['opsline-chef-client']['log_file'],
+    :json_attributes_file => node['opsline-chef-client']['json_attributes_file']
   })
 end
 cookbook_file '/opt/chef/bin/disable_chef' do
