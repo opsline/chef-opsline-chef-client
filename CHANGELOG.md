@@ -1,5 +1,8 @@
 # CHANGELOG for opsline-chef-client
 
+## 0.13.0
+* adding json_attributes_file attribute to run chef client with `-j` option
+
 ## 0.12.0
 * do better job disabling chef service
 

@@ -4,7 +4,7 @@ maintainer_email 'radek@opsline.com'
 license          'All rights reserved'
 description      'Helper recipes for chef client'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.12.0'
+version          '0.13.0'
 
 depends 'cron'
 depends 'logrotate'
