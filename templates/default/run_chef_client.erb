@@ -10,7 +10,7 @@ chef-client \
     -l info \
     -L <%= @log_file %> \
     <% if @json_attributes_file %>
-      -j <%= @json_attributes_file %>
+      -j <%= @json_attributes_file %> \
     <% end %>
     >/dev/null 2>&1
 
