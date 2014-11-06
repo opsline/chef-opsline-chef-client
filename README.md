@@ -20,8 +20,18 @@ Attributes
 ----------
 * `node['opsline-chef-client']['cron']`
   if true, setup cron job to run chef client
+* `node['opsline-chef-client']['use_cron_d']`
+  if true, cron will be created using cron_d resource
 * `node['opsline-chef-client']['runs_per_hour']`
   number of chef client runs per hour
+* `node['opsline-chef-client']['logrotate']['enabled']`
+  if true, logrotate will be configured to clean chef client log
+* `node['opsline-chef-client']['logrotate']['days']`
+  days to keep chef client log if logrotate is enabled
+* `node['opsline-chef-client']['log_file']`
+  change location of chef client log
+* `node['opsline-chef-client']['json_attributes_file']`
+  if set, chef clinet will run with -j option
 * `node['opsline-chef-client']['unregister_at_shutdown']`
   it true, setup service to unregister node from chef server on shutdown
 
