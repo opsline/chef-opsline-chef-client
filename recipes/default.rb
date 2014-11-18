@@ -54,6 +54,16 @@ end
 link '/usr/local/bin/enable_chef' do
   to '/opt/chef/bin/enable_chef'
 end
+cookbook_file '/opt/chef/bin/check_chef' do
+  action :create
+  source 'check_chef'
+  owner 'root'
+  group 'root'
+  mode '0744'
+end
+link '/usr/local/bin/check_chef' do
+  to '/opt/chef/bin/check_chef'
+end
 
 
 # directories

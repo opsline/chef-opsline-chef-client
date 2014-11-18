@@ -1,6 +1,10 @@
 #!/bin/bash
 
-rm -f /var/log/chef/disabled
-if [ "$?" == "0" ]; then
+lockfile="/var/log/chef/disabled"
+
+if [ -f $lockfile ]; then
+    rm -f $lockfile
     echo "chef has been enabled"
+else
+    echo "chef has already been enabled"
 fi

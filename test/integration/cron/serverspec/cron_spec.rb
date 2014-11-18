@@ -29,6 +29,14 @@ describe file('/usr/local/bin/enable_chef') do
   it { should be_linked_to '/opt/chef/bin/enable_chef' }
 end
 
+describe file('/opt/chef/bin/check_chef') do
+  it { should be_file}
+end
+
+describe file('/usr/local/bin/check_chef') do
+  it { should be_linked_to '/opt/chef/bin/check_chef' }
+end
+
 describe service('chef-client') do
   it { should_not be_running }
 end

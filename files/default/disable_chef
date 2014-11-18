@@ -1,6 +1,9 @@
 #!/bin/bash
 
-touch /var/log/chef/disabled
-if [ "$?" == "0" ]; then
+lockfile="/var/log/chef/disabled"
+if [ -f $lockfile ]; then
+    echo "chef has already been disabled"
+else
+    touch $lockfile
     echo "chef has been disabled"
 fi

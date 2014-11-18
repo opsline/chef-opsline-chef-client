@@ -1,0 +1,10 @@
+#!/bin/bash
+
+lockfile="/var/log/chef/disabled"
+if [ -f $lockfile ]; then
+    echo "chef is disabled"
+    exit 1
+else
+    echo "chef is enabled"
+    exit 0
+fi

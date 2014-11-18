@@ -1,5 +1,9 @@
 # CHANGELOG for opsline-chef-client
 
+## 0.14.0
+* adding check_chef script
+* better status reporting from scripts
+
 ## 0.13.0
 * adding json_attributes_file attribute to run chef client with `-j` option
 
