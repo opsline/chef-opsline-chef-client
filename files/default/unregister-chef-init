@@ -1,8 +1,8 @@
 #! /bin/sh
-# update-rc.d is handled by the recipe
+# update-rc.d and chkconfig are handled by the recipe
 #
 # unregister-chef         Chef un-register script
-# chkconfig: - 2345 99 01
+# chkconfig: 0 20 80
 # description: Unregister chef client from server on shutdown
 
 NAME=unregister-chef

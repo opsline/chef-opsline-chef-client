@@ -1,5 +1,9 @@
 # CHANGELOG for opsline-chef-client
 
+## 0.15.0
+* unregister_at_shutdown service will be correctly enabled on RHEL
+* unregister_at_shutdown script timeout fix for RHEL
+
 ## 0.14.0
 * adding check_chef script
 * better status reporting from scripts

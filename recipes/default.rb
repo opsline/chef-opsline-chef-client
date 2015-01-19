@@ -176,8 +176,22 @@ when 'debian'
     end
   end
 when 'rhel', 'fedora'
-  service 'unregister-chef' do
-    action node['opsline-chef-client']['unregister_at_shutdown'] ? :enable : :disable
+  if node['opsline-chef-client']['unregister_at_shutdown']
+    execute 'chkconfig_unregister_chef_on' do
+      action :run
+      command 'chkconfig --level 0 unregister-chef off'
+      user 'root'
+      timeout 15
+      not_if 'test -f /etc/rc.d/rc0.d/K80unregister-chef'
+    end
+  else
+    execute 'chkconfig_unregister_chef_delete' do
+      action :run
+      command 'chkconfig --del unregister-chef'
+      user 'root'
+      timeout 15
+      only_if 'test -f /etc/rc.d/rc0.d/K80unregister-chef'
+    end
   end
 end
 

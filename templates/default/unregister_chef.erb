@@ -3,8 +3,14 @@ set -x
 
 TIMEOUTCMD=$(which timeout)
 if [ -n "$TIMEOUTCMD" ]; then
+<% if node['platform_family'] == 'debian' -%>
   TIMEOUTCMD="$TIMEOUTCMD --foreground -k 30 15"
+<% elsif node['platform_family'] == 'rhel' -%>
+  TIMEOUTCMD="$TIMEOUTCMD 15"
+<% end -%>
 fi
+
+export LC_ALL=en_US.UTF-8
 
 for c in $(seq 5); do
   $TIMEOUTCMD /usr/bin/knife node delete <%= @node_name %> -c /etc/chef/client.rb -y -V -V
