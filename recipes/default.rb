@@ -182,7 +182,7 @@ when 'rhel', 'fedora'
       command 'chkconfig --level 0 unregister-chef off'
       user 'root'
       timeout 15
-      not_if 'test -f /etc/rc.d/rc0.d/K80unregister-chef'
+      not_if 'test -f /etc/rc.d/rc0.d/K10unregister-chef'
     end
   else
     execute 'chkconfig_unregister_chef_delete' do
@@ -190,7 +190,7 @@ when 'rhel', 'fedora'
       command 'chkconfig --del unregister-chef'
       user 'root'
       timeout 15
-      only_if 'test -f /etc/rc.d/rc0.d/K80unregister-chef'
+      only_if 'test -f /etc/rc.d/rc0.d/K10unregister-chef'
     end
   end
 end
