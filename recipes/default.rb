@@ -176,6 +176,12 @@ when 'debian'
     end
   end
 when 'rhel', 'fedora'
+  file '/var/lock/subsys/unregister-chef' do
+    action :create
+    owner 'root'
+    group 'root'
+    mode 0644
+  end
   if node['opsline-chef-client']['unregister_at_shutdown']
     execute 'chkconfig_unregister_chef_on' do
       action :run
