@@ -201,7 +201,12 @@ when 'rhel', 'fedora'
   end
 end
 
-# temporary fix
-file '/etc/init/chef-unregister.conf' do
-  action :delete
+
+# delete validation key
+if node['opsline-chef-client']['delete_validation'] and Chef::Config.has_key?(:validation_key)
+  file Chef::Config[:validation_key] do
+    action :delete
+    backup false
+    only_if { ::File.exists?(Chef::Config[:client_key]) }
+  end
 end

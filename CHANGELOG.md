@@ -1,5 +1,8 @@
 # CHANGELOG for opsline-chef-client
 
+## 0.16.0
+* adding ability to delete validation certificate (controlled with delete_validation attribute)
+
 ## 0.15.0
 * unregister_at_shutdown service will be correctly enabled on RHEL
 * unregister_at_shutdown script timeout fix for RHEL
