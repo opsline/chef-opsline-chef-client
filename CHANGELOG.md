@@ -1,5 +1,8 @@
 # CHANGELOG for opsline-chef-client
 
+## 0.17.0
+* fork bomb prevention
+
 ## 0.16.0
 * adding ability to delete validation certificate (controlled with delete_validation attribute)
 * fixing tests
