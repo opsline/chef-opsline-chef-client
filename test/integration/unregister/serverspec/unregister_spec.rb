@@ -9,7 +9,7 @@ describe "unregister" do
   end
 
   describe file('/etc/init.d/unregister-chef') do
-    it { should_not be_file }
+    it { should be_file }
   end
 
 end

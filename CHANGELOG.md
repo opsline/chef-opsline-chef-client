@@ -1,5 +1,11 @@
 # CHANGELOG for opsline-chef-client
 
+## 0.18.0
+* adding `datadog` recipe which installs and enables `ChefStatus` plugin
+* adding `allowed_runtime`
+* adding `status_file` attribute
+* refactoring tests; running test on Ubuntu 14.04
+
 ## 0.17.0
 * fork bomb prevention
 

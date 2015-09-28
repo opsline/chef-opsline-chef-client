@@ -12,7 +12,7 @@ chefpids=$(pidof chef-client)
 killchefs=0
 for chefpid in $chefpids; do
     runtime=$(ps --no-headers -o etimes -p $chefpid)
-    if [ "$runtime" -gt "1500" ]; then
+    if [ "$runtime" -gt "<%= @allowed_runtime %>" ]; then
         killchefs=1
     fi
 done
@@ -31,10 +31,10 @@ chef-client \
     >/dev/null 2>&1
 
 if [ "$?" == "0" ]; then
-    echo 'ok' >/var/log/chef/last_run_status
+    echo 'ok' ><%= @status_file %>
 else
-    echo 'failed' >/var/log/chef/last_run_status
+    echo 'failed' ><%= @status_file %>
 fi
 
 chmod 640 <%= @log_file %>
-chmod 644 /var/log/chef/last_run_status
+chmod 644 <%= @status_file %>

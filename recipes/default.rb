@@ -31,6 +31,8 @@ template '/opt/chef/bin/run_chef_client' do
   mode '0744'
   variables({
     :log_file => node['opsline-chef-client']['log_file'],
+    :status_file => node['opsline-chef-client']['status_file'],
+    :allowed_runtime => node['opsline-chef-client']['allowed_runtime'],
     :json_attributes_file => node['opsline-chef-client']['json_attributes_file']
   })
 end

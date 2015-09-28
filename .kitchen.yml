@@ -3,22 +3,38 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
 
 platforms:
-  - name: ubuntu-12.04
+  - name: ubuntu-14.04
 
 suites:
-  - name: cron
+  - name: default
     run_list:
-      - recipe[opsline-chef-client::cron]
+      - recipe[logrotate]
+      - recipe[opsline-chef-client]
     attributes:
   - name: disable
     run_list:
-      - recipe[opsline-chef-client::cron]
+      - recipe[opsline-chef-client]
       - recipe[opsline-chef-client::disable_chef]
     attributes:
+  - name: keep_validation
+    run_list:
+      - recipe[opsline-chef-client]
+    attributes:
+      opsline-chef-client:
+        delete_validation: false
   - name: unregister
     run_list:
-      - recipe[opsline-chef-client::unregister_on_shutdown]
+      - recipe[opsline-chef-client]
     attributes:
+      opsline-chef-client:
+        unregister_at_shutdown: true
+  - name: datadog
+    run_list:
+      - recipe[opsline-chef-client]
+      - recipe[opsline-chef-client::datadog]
+    attributes:
+      datadog:
+        api_key: fake_api_key

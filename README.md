@@ -1,11 +1,13 @@
 opsline-chef-client Cookbook
 =========================
-This cookbook was created to provide some additional facilities not available from the default chef-client cookbook.  Some additions include logging and status files along with the ability to enable/disable chef-client at will.
+This cookbook was created to provide some additional facilities not available 
+from the default chef-client cookbook. Some additions include logging and 
+status files along with the ability to enable/disable chef-client at will.
 
 
-The cron recipe is different than chef-client::cron in a way that it wraps
-chef-client with a script that creates log and status files. It also 
-provides script to temporarily disable (and enable back) the chef runs.
+The default recipe disables chef daemon and schedules chef runs from cron,
+providing status file for monitoring. It also provides script to temporarily
+disable (and enable back) the chef runs.
 
 Cookbook also provides a recipe to un-register chef nodes from chef server
 on shutdown.
@@ -13,7 +15,9 @@ on shutdown.
 
 Requirements
 ------------
-None
+* cron cookbook
+* logrotate cookbook
+* datadog cookbook
 
 
 Attributes
@@ -24,16 +28,22 @@ Attributes
   if true, cron will be created using cron_d resource
 * `node['opsline-chef-client']['runs_per_hour']`
   number of chef client runs per hour
+* `node['opsline-chef-client']['allowed_runtime']`
+  number of seconds chef client is allowed to run. It will be killed after that.
+* `node['opsline-chef-client']['log_file']`
+  change location of chef client log
+* `node['opsline-chef-client']['status_file']`
+  change location of chef status file
+* `node['opsline-chef-client']['json_attributes_file']`
+  if set, chef clinet will run with -j option
 * `node['opsline-chef-client']['logrotate']['enabled']`
   if true, logrotate will be configured to clean chef client log
 * `node['opsline-chef-client']['logrotate']['days']`
   days to keep chef client log if logrotate is enabled
-* `node['opsline-chef-client']['log_file']`
-  change location of chef client log
-* `node['opsline-chef-client']['json_attributes_file']`
-  if set, chef clinet will run with -j option
 * `node['opsline-chef-client']['unregister_at_shutdown']`
   it true, setup service to unregister node from chef server on shutdown
+* `node['opsline-chef-client']['delete_validation']`
+  it true, validation file will be removed
 
 
 Usage
@@ -64,10 +74,20 @@ This is a good way to disable chef client runs temporarily.
 Enable script removes the `/var/log/chef/disabled` file so that
 chef client can run again from cron.
 
-
 If `node['opsline-chef-client']['unregister_at_shutdown']` is set to `true`,
 installs an init script that will execute when node is shutting down.
 It will delete node and client objects from chef server.
+
+If `node['opsline-chef-client']['delete_validation']` is set to `true`,
+validation key will be removed from the node.
+
+#### opsline-chef-client::datadog
+Installs datadog agent and ChefStatus check.
+
+The check will emit `chef.status` metric with the following values:
+* 0: OK
+* 1: error
+* -1: plugin error
 
 #### opsline-chef-client::cron
 For compatibility only - uses default recipe.
