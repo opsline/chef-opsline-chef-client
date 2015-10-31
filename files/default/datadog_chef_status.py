@@ -17,7 +17,7 @@ class ChefStatus(AgentCheck):
                     val = 1
             except:
                 val = -1
-            finally:
+            else:
                 f.close()
         else:
             val = -1

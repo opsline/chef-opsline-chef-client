@@ -1,5 +1,9 @@
 # CHANGELOG for opsline-chef-client
 
+## 0.19.0
+* depend on `datadog` cookbook `>= 2.2.0`
+* fixing datadog chef status check error when status file does not exist
+
 ## 0.18.0
 * adding `datadog` recipe which installs and enables `ChefStatus` plugin
 * adding `allowed_runtime`

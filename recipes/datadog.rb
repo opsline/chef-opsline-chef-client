@@ -31,7 +31,9 @@ cookbook_file '/etc/dd-agent/checks.d/chef_status.py' do
 end
 
 datadog_monitor 'chef_status' do
+  cookbook 'opsline-chef-client'
   init_config({
     'status_file' => node['opsline-chef-client']['status_file']
   })
+  action :add
 end
