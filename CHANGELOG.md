@@ -1,5 +1,8 @@
 # CHANGELOG for opsline-chef-client
 
+# 0.20.0
+* Updated to work with logrotate-2.1.0
+
 ## 0.19.0
 * depend on `datadog` cookbook `>= 2.2.0`
 * fixing datadog chef status check error when status file does not exist

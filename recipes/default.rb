@@ -129,7 +129,7 @@ logrotate_app 'chef-client' do
   options ['copytruncate', 'missingok', 'compress', 'notifempty', 'delaycompress']
   frequency 'daily'
   rotate node['opsline-chef-client']['logrotate']['days']
-  enable node['opsline-chef-client']['logrotate']['enabled'] ? :create : :delete
+  enable node['opsline-chef-client']['logrotate'].has_key?('enabled') ? node['opsline-chef-client']['logrotate']['enabled'] : false
 end
 
 
