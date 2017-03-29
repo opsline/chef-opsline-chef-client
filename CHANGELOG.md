@@ -1,5 +1,9 @@
 # CHANGELOG for opsline-chef-client
 
+## 0.21.0
+* adding `disabled_file` attribute
+* adding `chef.enabled` datadog metric
+
 # 0.20.0
 * Updated to work with logrotate-2.1.0
 

@@ -1,7 +1,11 @@
-# this check will read the status file and emit chef.status metric
+# chef.status
 #  0: success
 #  1: failure
 # -1: plugin error
+
+# chef.enabled
+#  0: disabled
+#  1: enabled
 
 from checks import AgentCheck
 
@@ -19,6 +23,12 @@ class ChefStatus(AgentCheck):
                 val = -1
             else:
                 f.close()
-        else:
-            val = -1
-        self.gauge('chef.status', val)
+            self.gauge('chef.status', val)
+
+        disabled_file = self.init_config.get('disabled_file', None)
+        if disabled_file:
+            if os.path.exists(disabled_file):
+                val = 0
+            else:
+                val = 1
+            self.gauge('chef.enabled', val)

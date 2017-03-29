@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -e /var/log/chef/disabled ]; then
+if [ -e <%= node['opsline-chef-client']['disabled_file'] %> ]; then
     exit 0
 fi
 

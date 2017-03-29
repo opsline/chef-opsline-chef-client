@@ -1,7 +1,6 @@
 #!/bin/bash
 
-lockfile="/var/log/chef/disabled"
-
+lockfile="<%= node['opsline-chef-client']['disabled_file'] %>"
 if [ -f $lockfile ]; then
     rm -f $lockfile
     echo "chef has been enabled"
