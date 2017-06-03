@@ -12,17 +12,36 @@ fi
 
 export LC_ALL=en_US.UTF-8
 
-for c in $(seq 5); do
-  $TIMEOUTCMD /usr/bin/knife node delete <%= @node_name %> -c /etc/chef/client.rb -y -V -V
-  [ "$?" == "0" ] && break
-  sleep 1
-done
+if grep -q opsworks-cm /etc/chef/client.rb; then
 
-for c in $(seq 5); do
-  $TIMEOUTCMD /usr/bin/knife client delete <%= @node_name %> -c /etc/chef/client.rb -y -V -V
-  [ "$?" == "0" ] && break
-  sleep 1
-done
+  ec2_az=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
+  ec2_region=${ec2_az:0:${#ec2_az}-1}
+  endpoint=$(grep chef_server_url /etc/chef/client.rb |perl -p -e 's/.+https:\/\/(.+\.opsworks-cm\.io).+/$1/')
+  organization=$(grep chef_server_url /etc/chef/client.rb |perl -p -e "s/.+\/organizations\/(.+)['\"]/\$1/")
+  server_name=$(aws opsworks-cm describe-servers --region $ec2_region --query "Servers[?Endpoint == '${endpoint}'].ServerName" --output text)
+
+  aws opsworks-cm disassociate-node \
+    --output text \
+    --region "${ec2_region}" \
+    --node-name "<%= @node_name %>" \
+    --server-name "${server_name}" \
+    --engine-attributes "Name=CHEF_ORGANIZATION,Value=${organization}"
+
+else
+
+  for c in $(seq 5); do
+    $TIMEOUTCMD /usr/bin/knife node delete <%= @node_name %> -c /etc/chef/client.rb -y -V -V
+    [ "$?" == "0" ] && break
+    sleep 1
+  done
+
+  for c in $(seq 5); do
+    $TIMEOUTCMD /usr/bin/knife client delete <%= @node_name %> -c /etc/chef/client.rb -y -V -V
+    [ "$?" == "0" ] && break
+    sleep 1
+  done
+
+fi
 
 rm -f /etc/chef/client.pem
 

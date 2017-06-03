@@ -1,5 +1,8 @@
 # CHANGELOG for opsline-chef-client
 
+## 0.22.0
+* unregister from opsworks chef automate (if detected)
+
 ## 0.21.0
 * adding `disabled_file` attribute
 * adding `chef.enabled` datadog metric
