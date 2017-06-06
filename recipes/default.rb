@@ -36,9 +36,9 @@ template '/opt/chef/bin/run_chef_client' do
     :json_attributes_file => node['opsline-chef-client']['json_attributes_file']
   })
 end
-cookbook_file '/opt/chef/bin/disable_chef' do
+template '/opt/chef/bin/disable_chef' do
   action :create
-  source 'disable_chef'
+  source 'disable_chef.erb'
   owner 'root'
   group 'root'
   mode '0744'
@@ -46,9 +46,9 @@ end
 link '/usr/local/bin/disable_chef' do
   to '/opt/chef/bin/disable_chef'
 end
-cookbook_file '/opt/chef/bin/enable_chef' do
+template '/opt/chef/bin/enable_chef' do
   action :create
-  source 'enable_chef'
+  source 'enable_chef.erb'
   owner 'root'
   group 'root'
   mode '0744'
@@ -56,9 +56,9 @@ end
 link '/usr/local/bin/enable_chef' do
   to '/opt/chef/bin/enable_chef'
 end
-cookbook_file '/opt/chef/bin/check_chef' do
+template '/opt/chef/bin/check_chef' do
   action :create
-  source 'check_chef'
+  source 'check_chef.erb'
   owner 'root'
   group 'root'
   mode '0744'
